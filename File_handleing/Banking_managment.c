@@ -16,6 +16,7 @@ void deposit_money();
 void withdraw_money();
 void check_balance();
 void transaction_history();
+void delete_account();
 void menu();
 void clear_screen();
 
@@ -47,6 +48,9 @@ int main()
       transaction_history();
       break;
     case 6:
+      delete_account();
+      break;
+    case 7:
       printf("\nExiting the program...\n");
       exit(0);
       break;
@@ -67,7 +71,8 @@ void menu()
   printf("3. Withdraw Money\n");
   printf("4. Check Balance\n");
   printf("5. View Transaction History\n");
-  printf("6. Exit\n");
+  printf("6. Delete Account\n");
+  printf("7. Exit\n");
   printf("==============================================\n");
 }
 
@@ -287,3 +292,51 @@ void transaction_history()
   getchar();
 }
 
+// Function to delete an account
+void delete_account()
+{
+  FILE *file, *temp_file;
+  Account account;
+  int acc_number;
+  int found = 0;
+
+  printf("\nEnter Account Number to Delete: ");
+  scanf("%d", &acc_number);
+
+  file = fopen("accounts.txt", "r");
+  temp_file = fopen("temp.txt", "w");
+  if (file == NULL || temp_file == NULL)
+  {
+    printf("\nError: Could not access account records.\n");
+    return;
+  }
+
+  while (fscanf(file, "%d,%29[^,],%f", &account.account_number, account.name, &account.balance) != EOF)
+  {
+    if (account.account_number == acc_number)
+    {
+      found = 1;
+      printf("\nAccount Number %d deleted successfully.\n", acc_number);
+    }
+    else
+    {
+      fprintf(temp_file, "%d,%s,%.2f\n", account.account_number, account.name, account.balance);
+    }
+  }
+
+  fclose(file);
+  fclose(temp_file);
+
+  if (found)
+  {
+    remove("accounts.txt");
+    rename("temp.txt", "accounts.txt");
+  }
+  else
+  {
+    printf("\nAccount not found.\n");
+  }
+
+  getchar();
+  getchar();
+}

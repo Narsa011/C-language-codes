@@ -1,0 +1,3 @@
+1001 , NarendraSingh , IaswarSingh , Siwara , Sanchore , 123456789012 , 9828446870
+1002 , BinduKanwar , IaswarSingh , Siwara , Sanchore , 4548544509 , 9461338324
+1003 , LokendraSingh , JituSingh , Siwara , Sanchore , 5878679569 , 9642643034
